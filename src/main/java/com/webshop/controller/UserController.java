@@ -2,8 +2,6 @@ package com.webshop.controller;
 
 import com.webshop.model.State;
 import com.webshop.model.User;
-import com.webshop.model.UserProfile;
-import com.webshop.model.UserProfileType;
 import com.webshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +33,47 @@ public class UserController
     public String submitForm(@ModelAttribute("user") User user,
                              BindingResult result, SessionStatus status)
     {
+        //Validation code start
+        boolean error = false;
+
+        if (user.getFirstName().isEmpty())
+        {
+            result.rejectValue("firstName", "error.firstName");
+            error = true;
+        }
+
+        if (user.getLastName().isEmpty())
+        {
+            result.rejectValue("lastName", "error.lastName");
+            error = true;
+        }
+
+        if (user.getEmail().isEmpty())
+        {
+            result.rejectValue("email", "error.email");
+            error = true;
+        }
+
+        if (user.getPassword().isEmpty())
+        {
+            result.rejectValue("password", "error.password");
+            error = true;
+        }
+
+        if (user.getSsoId().isEmpty())
+        {
+            result.rejectValue("ssoId", "error.ssoId");
+            error = true;
+        }
+
+        if (error)
+        {
+            return "addUser";
+        }
+
+        //Verifying if information is same as input by user
+        System.out.println(user);
+
         //Store the employee information in database
         user.setState(State.ACTIVE.getState());
         userService.saveUser(user);
