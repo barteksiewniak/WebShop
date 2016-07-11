@@ -1,5 +1,6 @@
 package com.webshop.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,8 +17,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "APP_USER")
-public class User
+public class User implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -177,6 +180,4 @@ public class User
                 + ", firstName=" + firstName + ", lastName=" + lastName
                 + ", email=" + email + ", state=" + state + ", userProfiles=" + userProfiles + "]";
     }
-
-
 }

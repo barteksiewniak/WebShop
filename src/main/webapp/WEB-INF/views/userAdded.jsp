@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-    <title>Title</title>
+    <title>Adding User to DB - Success</title>
 </head>
 <body>
-All ok, user added.
+User has been added successfully.
 </body>
 </html>

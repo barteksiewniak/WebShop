@@ -1,7 +1,5 @@
 package com.webshop.controller;
 
-import com.webshop.model.State;
-import com.webshop.model.User;
 import com.webshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,21 +19,6 @@ public class WebShopController
 {
     @Autowired
     UserService userService;
-
-	/*
-    Method testing that adding to db is working correctly
-	@RequestMapping("/add")
-	public String testaddUser() {
-		User user = new User();
-		user.setFirstName("Barstosz");
-		user.setLastName("Sieswniak");
-		user.setEmail("bartesksiewniak@gmail.com");
-		user.setPassword("asbc");
-		user.setSsoId("432");
-		user.setState(State.ACTIVE.getState());
-		userService.saveUser(user);
-		return "useradded";
-	}*/
 
     @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
     public String homePage(ModelMap model)
