@@ -75,12 +75,6 @@ public class UserController
             return "addUser";
         }
 
-        //Verifying if information is same as input by user
-        System.out.println(user);
-
-        //Store the employee information in database
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setState(State.ACTIVE.getState());
         userService.saveUser(user);
 
         //Mark Session Complete
