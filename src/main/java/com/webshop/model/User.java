@@ -1,6 +1,7 @@
 package com.webshop.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,7 +48,7 @@ public class User implements Serializable
     @JoinTable(name = "APP_USER_USER_PROFILE",
             joinColumns = {@JoinColumn(name = "USER_ID")},
             inverseJoinColumns = {@JoinColumn(name = "USER_PROFILE_ID")})
-    private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
+    private Collection<UserProfile> userProfiles;
 
     public int getId()
     {
@@ -119,14 +120,14 @@ public class User implements Serializable
         this.state = state;
     }
 
-    public Set<UserProfile> getUserProfiles()
-    {
-        return userProfiles;
-    }
-
-    public void setUserProfiles(Set<UserProfile> userProfiles)
+    public void setUserProfiles(Collection<UserProfile> userProfiles)
     {
         this.userProfiles = userProfiles;
+    }
+
+    public Collection<UserProfile> getUserProfiles()
+    {
+        return userProfiles;
     }
 
     @Override
