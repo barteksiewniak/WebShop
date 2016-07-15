@@ -22,9 +22,6 @@ public class UserController
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @RequestMapping(method = RequestMethod.GET)
     public String setupForm(Model model)
     {
