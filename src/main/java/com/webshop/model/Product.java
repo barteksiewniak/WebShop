@@ -17,6 +17,39 @@ public class Product
     @Column(name = "UNIT_PRICE")
     private BigDecimal unitPrice;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Category category;
+
+    public String getProductName()
+    {
+        return productName;
+    }
+
+    public void setProductName(String productName)
+    {
+        this.productName = productName;
+    }
+
+    public BigDecimal getUnitPrice()
+    {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(BigDecimal unitPrice)
+    {
+        this.unitPrice = unitPrice;
+    }
+
+    public Category getCategory()
+    {
+        return category;
+    }
+
+    public void setCategory(Category category)
+    {
+        this.category = category;
+    }
+
     @Override
     public String toString()
     {
@@ -24,6 +57,7 @@ public class Product
                 "id=" + id +
                 ", productName='" + productName + '\'' +
                 ", unitPrice=" + unitPrice +
+                ", category=" + category +
                 '}';
     }
 
@@ -49,7 +83,11 @@ public class Product
         {
             return false;
         }
-        return unitPrice != null ? unitPrice.equals(product.unitPrice) : product.unitPrice == null;
+        if (unitPrice != null ? !unitPrice.equals(product.unitPrice) : product.unitPrice != null)
+        {
+            return false;
+        }
+        return category != null ? category.equals(product.category) : product.category == null;
 
     }
 
@@ -59,26 +97,7 @@ public class Product
         int result = id;
         result = 31 * result + (productName != null ? productName.hashCode() : 0);
         result = 31 * result + (unitPrice != null ? unitPrice.hashCode() : 0);
+        result = 31 * result + (category != null ? category.hashCode() : 0);
         return result;
-    }
-
-    public String getProductName()
-    {
-        return productName;
-    }
-
-    public void setProductName(String productName)
-    {
-        this.productName = productName;
-    }
-
-    public BigDecimal getUnitPrice()
-    {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(BigDecimal unitPrice)
-    {
-        this.unitPrice = unitPrice;
     }
 }
