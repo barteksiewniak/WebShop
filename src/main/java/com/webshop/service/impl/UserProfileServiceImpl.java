@@ -1,7 +1,8 @@
-package com.webshop.service;
+package com.webshop.service.impl;
 
 import com.webshop.dao.UserProfileDao;
 import com.webshop.model.UserProfile;
+import com.webshop.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

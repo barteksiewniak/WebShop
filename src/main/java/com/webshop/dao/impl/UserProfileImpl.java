@@ -1,5 +1,7 @@
-package com.webshop.dao;
+package com.webshop.dao.impl;
 
+import com.webshop.dao.AbstractDao;
+import com.webshop.dao.UserProfileDao;
 import com.webshop.model.UserProfile;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
