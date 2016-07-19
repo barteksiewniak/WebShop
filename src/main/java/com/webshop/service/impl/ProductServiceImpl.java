@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductServiceImpl implements ProductService
 {
     @Autowired
-    ProductDao productDao;
+    private ProductDao productDao;
 
     @Override
     public Product findById(int id)
