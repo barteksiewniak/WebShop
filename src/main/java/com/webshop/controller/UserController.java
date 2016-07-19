@@ -1,10 +1,8 @@
 package com.webshop.controller;
 
-import com.webshop.model.State;
 import com.webshop.model.User;
 import com.webshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
