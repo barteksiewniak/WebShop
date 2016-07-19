@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 public interface ProductDao
 {
     Product findById(int id);
-    void saveProduct(Product user);
+    void saveProduct(Product product);
 }
