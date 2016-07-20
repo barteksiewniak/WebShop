@@ -33,7 +33,8 @@ public class HibernateConfiguration
     private Environment environment;
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory()
+    {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
         em.setPackagesToScan("com.webshop.model");
@@ -68,7 +69,8 @@ public class HibernateConfiguration
 
     @Bean
     @Autowired
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf)
+    {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
 
@@ -76,7 +78,8 @@ public class HibernateConfiguration
     }
 
     @Bean
-    public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
+    public PersistenceExceptionTranslationPostProcessor exceptionTranslation()
+    {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 }
