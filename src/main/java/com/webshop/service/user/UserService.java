@@ -1,6 +1,6 @@
-package com.webshop.service;
+package com.webshop.service.user;
 
-import com.webshop.model.User;
+import com.webshop.model.user.User;
 
 public interface UserService
 {

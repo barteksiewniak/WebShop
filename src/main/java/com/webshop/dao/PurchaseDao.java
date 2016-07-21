@@ -1,6 +1,6 @@
 package com.webshop.dao;
 
-import com.webshop.model.Purchase;
+import com.webshop.model.product.Purchase;
 
 public interface PurchaseDao
 {

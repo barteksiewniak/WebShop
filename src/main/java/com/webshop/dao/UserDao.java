@@ -1,6 +1,6 @@
 package com.webshop.dao;
 
-import com.webshop.model.User;
+import com.webshop.model.user.User;
 
 public interface UserDao
 {

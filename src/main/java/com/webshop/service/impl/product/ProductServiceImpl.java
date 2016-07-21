@@ -1,8 +1,8 @@
-package com.webshop.service.impl;
+package com.webshop.service.impl.product;
 
 import com.webshop.dao.ProductDao;
-import com.webshop.model.Product;
-import com.webshop.service.ProductService;
+import com.webshop.model.product.Product;
+import com.webshop.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

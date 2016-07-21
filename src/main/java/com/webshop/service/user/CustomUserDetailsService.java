@@ -1,4 +1,4 @@
-package com.webshop.service;
+package com.webshop.service.user;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.webshop.model.User;
-import com.webshop.model.UserProfile;
+import com.webshop.model.user.User;
+import com.webshop.model.user.UserProfile;
 
 @Service("customUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService

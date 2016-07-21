@@ -1,6 +1,6 @@
-package com.webshop.service;
+package com.webshop.service.product;
 
-import com.webshop.model.Product;
+import com.webshop.model.product.Product;
 
 import java.util.List;
 

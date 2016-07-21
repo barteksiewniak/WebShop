@@ -1,7 +1,6 @@
 package com.webshop.dao;
 
-import com.webshop.model.Product;
-import org.springframework.stereotype.Repository;
+import com.webshop.model.product.Product;
 
 import java.util.List;
 

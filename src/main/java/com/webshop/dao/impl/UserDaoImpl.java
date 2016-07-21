@@ -2,11 +2,9 @@ package com.webshop.dao.impl;
 
 import com.webshop.dao.AbstractDao;
 import com.webshop.dao.UserDao;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import com.webshop.model.User;
+import com.webshop.model.user.User;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;

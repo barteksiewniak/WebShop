@@ -1,11 +1,11 @@
-package com.webshop.service.impl;
+package com.webshop.service.impl.user;
 
 import com.webshop.dao.UserDao;
 import com.webshop.dao.UserProfileDao;
-import com.webshop.model.State;
-import com.webshop.model.User;
-import com.webshop.model.UserProfile;
-import com.webshop.service.UserService;
+import com.webshop.model.user.State;
+import com.webshop.model.user.User;
+import com.webshop.model.user.UserProfile;
+import com.webshop.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
