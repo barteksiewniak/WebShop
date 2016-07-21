@@ -39,9 +39,9 @@ public abstract class AbstractDao<PK extends Serializable, T>
         getEntityManager().persist(entity);
     }
 
-    public void delete(T entity)
+    public void delete(Object id)
     {
-        getEntityManager().remove(entity);
+        getEntityManager().remove(id);
     }
 
     public void update(T entity)

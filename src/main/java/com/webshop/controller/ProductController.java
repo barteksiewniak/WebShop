@@ -15,7 +15,7 @@ public class ProductController
     private ProductService productService;
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
-    public String listPersons(Model model)
+    public String listOfProducts(Model model)
     {
         model.addAttribute("product", new Product());
         model.addAttribute("listOfProducts", productService.listOfProducts());

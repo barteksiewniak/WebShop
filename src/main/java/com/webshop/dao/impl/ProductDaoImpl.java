@@ -37,6 +37,6 @@ public class ProductDaoImpl extends AbstractDao<Integer, Product> implements Pro
     @Override
     public void removeProduct(int id)
     {
-        removeProduct(id);
+        delete(id);
     }
 }
