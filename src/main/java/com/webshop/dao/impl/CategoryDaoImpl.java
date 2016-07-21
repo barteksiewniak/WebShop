@@ -2,7 +2,7 @@ package com.webshop.dao.impl;
 
 import com.webshop.dao.AbstractDao;
 import com.webshop.dao.CategoryDao;
-import com.webshop.model.Category;
+import com.webshop.model.product.Category;
 import org.springframework.stereotype.Repository;
 
 @Repository("categoryDao")

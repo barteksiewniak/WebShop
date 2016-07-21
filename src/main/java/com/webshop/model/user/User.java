@@ -1,9 +1,7 @@
-package com.webshop.model;
+package com.webshop.model.user;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

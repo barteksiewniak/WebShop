@@ -1,6 +1,6 @@
-package com.webshop.service;
+package com.webshop.service.product;
 
-import com.webshop.model.Category;
+import com.webshop.model.product.Category;
 
 public interface CategoryService
 {

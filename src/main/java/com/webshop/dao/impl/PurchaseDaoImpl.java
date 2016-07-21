@@ -2,7 +2,7 @@ package com.webshop.dao.impl;
 
 import com.webshop.dao.AbstractDao;
 import com.webshop.dao.PurchaseDao;
-import com.webshop.model.Purchase;
+import com.webshop.model.product.Purchase;
 import org.springframework.stereotype.Repository;
 
 @Repository("purchaseDao")

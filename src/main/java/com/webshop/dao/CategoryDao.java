@@ -1,6 +1,6 @@
 package com.webshop.dao;
 
-import com.webshop.model.Category;
+import com.webshop.model.product.Category;
 
 public interface CategoryDao
 {

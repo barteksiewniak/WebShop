@@ -1,4 +1,6 @@
-package com.webshop.model;
+package com.webshop.model.product;
+
+import com.webshop.model.user.User;
 
 import javax.persistence.*;
 

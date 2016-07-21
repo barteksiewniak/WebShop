@@ -1,10 +1,10 @@
-package com.webshop.dao;
+package com.webshop.service.product;
 
 import com.webshop.model.product.Product;
 
 import java.util.List;
 
-public interface ProductDao
+public interface ProductService
 {
     Product findById(int id);
     void addProduct(Product product);

@@ -1,6 +1,6 @@
-package com.webshop.service;
+package com.webshop.service.user;
 
-import com.webshop.model.UserProfile;
+import com.webshop.model.user.UserProfile;
 
 public interface UserProfileService
 {

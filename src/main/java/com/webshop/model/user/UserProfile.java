@@ -1,4 +1,4 @@
-package com.webshop.model;
+package com.webshop.model.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
