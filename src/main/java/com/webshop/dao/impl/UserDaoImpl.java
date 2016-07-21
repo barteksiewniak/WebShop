@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.webshop.model.user.User;
 
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -20,14 +21,24 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao
 
     public User findBySSO(String sso)
     {
-        CriteriaQuery<User> query = createEntityCriteria();
-        Root<User> root = query.from(User.class);
+        try
+        {
+            CriteriaQuery<User> query = createEntityCriteria();
+            Root<User> root = query.from(User.class);
 
-        query.select(root)
-                .where(getCriteriaBuilder().equal(root.get("ssoId"), sso));
+            query.select(root)
+                    .where(getCriteriaBuilder().equal(root.get("ssoId"), sso));
 
-        TypedQuery<User> tq = getEntityManager().createQuery(query);
-        return tq.getSingleResult();
+            TypedQuery<User> tq = getEntityManager().createQuery(query);
+            return tq.getSingleResult();
+        }
+
+        // read about better solution than try/catch
+        // http://stackoverflow.com/questions/8138458/javax-persistence-noresultexception-no-entity-found-for-query
+        catch (NoResultException nre)
+        {
+            return null;
+        }
     }
 
     public void saveUser(User user)

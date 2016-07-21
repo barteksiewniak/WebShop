@@ -65,10 +65,18 @@ public class UserController
             error = true;
         }
 
+        else if (userService.findBySso(user.getSsoId()) != null)
+        {
+            result.rejectValue("ssoId", "error.exist");
+            error = true;
+        }
+
         if (error)
         {
             return "addUser";
         }
+
+
 
         userService.saveUser(user);
 
