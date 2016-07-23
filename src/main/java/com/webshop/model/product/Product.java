@@ -20,6 +20,10 @@ public class Product
     @ManyToOne(cascade = CascadeType.MERGE)
     private Category category;
 
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
+
     public String getProductName()
     {
         return productName;

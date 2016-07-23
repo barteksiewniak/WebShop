@@ -7,6 +7,8 @@
 </head>
 <body>
 	Dear <strong>${user}</strong>, Welcome to Admin Page.
-	<a href="<c:url value="/logout" />">Logout</a>
+	<a href="<c:url value="/logout"/>">Logout</a>
+
+	<a href="<c:url value="admin/products"/>">Produkty</a>
 </body>
 </html>
