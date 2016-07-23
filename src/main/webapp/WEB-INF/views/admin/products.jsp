@@ -15,38 +15,6 @@
 <body>
 <div class="container">
 
-    <form:form role="form" method="post" modelAttribute="product">
-        <%-- <form:errors path="*" cssClass="error" /> --%>
-        <table>
-            <tr>
-                <div class="form-group">
-                    <td><spring:message code="lbl.name" text="lbl.pname"/></td>
-                    <td><form:input class="form-control" path="productName"/></td>
-                    <td><form:errors path="productName" cssClass="error"/></td>
-                </div>
-            </tr>
-            <tr>
-                <div class="form-group">
-                    <td><spring:message code="lbl.price" text="lbl.pprice"/></td>
-                    <td><form:input class="form-control" path="unitPrice"/></td>
-                    <td><form:errors path="unitPrice" cssClass="error"/></td>
-                </div>
-            </tr>
-            <tr>
-                <div class="form-group">
-                    <td><spring:message code="lbl.category" text="lbl.pcategory"/></td>
-                    <td><form:select path="category" items="${categoryList}" itemValue="id"
-                                     class="form-control" itemLabel="categoryName"/></td>
-                    <td><form:errors path="category" cssClass="error"/></td>
-                </div>
-            </tr>
-            <tr>
-                <td><form:button class="btn btn-success" type="submit" value="Add Product">Add</form:button></td>
-            </tr>
-        </table>
-    </form:form>
-
-    <button class="btn btn-success" href="<c:url value="admin/products/create"/>" type="submit">+</button>
     <c:if test="${!empty listOfProducts}">
         <table class="table table-hover">
             <thead>
@@ -66,9 +34,10 @@
                     <td class="col-md-1">${product.unitPrice}</td>
                     <td class="col-md-4">${product.category.categoryName}</td>
                     <td class="col-md-2">
-                        <button class="btn btn-default" href="<c:url value="admin/products/${product.id}/edit"/>"
-                                type="submit">Edit
-                        </button>
+                        <a href="<c:url value="/admin/products/${product.id}/edit"/>">
+                            <button class="btn btn-info" type="submit">Edit
+                            </button>
+                        </a>
                         <a href="<c:url value="/admin/products/${product.id}/remove"/>">
                             <button class="btn btn-danger" type="submit">Delete
                             </button>
@@ -76,10 +45,27 @@
                     </td>
                 </tr>
             </c:forEach>
+            <spring:message code="lbl.name" var="productName"/>
+            <spring:message code="lbl.price" var="productPrice"/>
+            <spring:message code="lbl.id" var="productId"/>
+            <form:form role="form" method="post" modelAttribute="product">
+                <tr>
+                    <td class="col-md-1"><form:input class="form-control" path="id" value="${productId}" placeholder="${productId}" disabled="true"/></td>
+                    <td class="col-md-4"><form:input class="form-control" path="productName" placeholder="${productName}"/></td>
+                    <td class="col-md-1"><form:input class="form-control" path="unitPrice" placeholder="${productPrice}"/></td>
+                    <td class="col-md-4"><form:select class="form-control" path="category" items="${categoryList}"
+                                                      itemValue="id"
+                                                      itemLabel="categoryName"/></td>
+                    <td class="col-md-2">
+                        <a href="<c:url value="/admin/products/create"/>">
+                            <button class="btn btn-success" type="submit">+</button>
+                        </a>
+                    </td>
+                </tr>
+            </form:form>
             </tbody>
         </table>
     </c:if>
 </div>
-
 </body>
 </html>
