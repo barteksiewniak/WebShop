@@ -36,9 +36,9 @@ public class UserServiceImpl implements UserService
         return dao.findBySSO(sso);
     }
 
-    public void saveUser(User user)
+    public void saveUser(User user, String userType)
     {
-        UserProfile userProfile = profileDao.findByName("USER");
+        UserProfile userProfile = profileDao.findByName(userType);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setState(State.ACTIVE.getState());
         user.setUserProfiles(Collections.singletonList(userProfile));

@@ -76,9 +76,7 @@ public class UserController
             return "addUser";
         }
 
-
-
-        userService.saveUser(user);
+        userService.saveUser(user, "USER");
 
         //Mark Session Complete
         status.setComplete();
