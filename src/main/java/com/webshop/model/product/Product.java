@@ -5,8 +5,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "PRODUCT")
-public class Product
-{
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -20,9 +19,24 @@ public class Product
     @ManyToOne(cascade = CascadeType.MERGE)
     private Category category;
 
-    public int getId() { return id; }
+    public Product() {}
 
-    public void setId(int id) { this.id = id; }
+    public Product(String productName, BigDecimal unitPrice, Category category)
+    {
+        this.productName = productName;
+        this.unitPrice = unitPrice;
+        this.category = category;
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
 
     public String getProductName()
     {
@@ -68,27 +82,22 @@ public class Product
     @Override
     public boolean equals(Object o)
     {
-        if (this == o)
-        {
+        if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass())
-        {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
         Product product = (Product) o;
 
-        if (id != product.id)
-        {
+        if (id != product.id) {
             return false;
         }
-        if (productName != null ? !productName.equals(product.productName) : product.productName != null)
-        {
+        if (productName != null ? !productName.equals(product.productName) : product.productName != null) {
             return false;
         }
-        if (unitPrice != null ? !unitPrice.equals(product.unitPrice) : product.unitPrice != null)
-        {
+        if (unitPrice != null ? !unitPrice.equals(product.unitPrice) : product.unitPrice != null) {
             return false;
         }
         return category != null ? category.equals(product.category) : product.category == null;
@@ -96,8 +105,7 @@ public class Product
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int result = id;
         result = 31 * result + (productName != null ? productName.hashCode() : 0);
         result = 31 * result + (unitPrice != null ? unitPrice.hashCode() : 0);

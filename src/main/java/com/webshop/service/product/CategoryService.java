@@ -8,5 +8,7 @@ public interface CategoryService
 {
     void saveCategory(Category category);
 
+    Category findByName(String name);
+
     List<Category> list();
 }
