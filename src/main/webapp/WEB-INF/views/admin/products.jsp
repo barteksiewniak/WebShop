@@ -4,17 +4,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <style>
-        .error {
-            color: #ff0000;
-            font-weight: bold;
-        }
-    </style>
     <link href="<c:url value='/static/css/bootstrap.css'/>" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
-
 
     <table class="table table-hover">
         <thead>
@@ -30,7 +23,7 @@
         <tbody>
         <c:forEach items="${listOfProducts}" var="product">
             <c:choose>
-                <c:when test="${product.id==currentEdit}">
+                <c:when test="${product.id==IdOfProductToEdit}">
 
                     <form:form id="edit" role="form" method="post" modelAttribute="product">
                         <tr>
@@ -43,7 +36,7 @@
                                                              value="${product.unitPrice}"
                                                              required="required"/></td>
                             <td class="col-md-4"><form:select class="form-control" path="category"
-                                                              items="${categoryList}"
+                                                              items="${listOfCategories}"
                                                               itemValue="categoryName"
                                                               itemLabel="categoryName"/></td>
                             <td class="col-md-2">
@@ -53,32 +46,31 @@
                         </tr>
                     </form:form>
 
+                </c:when>
+                <c:otherwise>
 
-                </c:when><c:otherwise>
-
-                <tr>
-                    <td class="col-md-1">${product.id}</td>
-                    <td class="col-md-4">${product.productName}</td>
-                    <td class="col-md-1">${product.unitPrice}</td>
-                    <td class="col-md-4">${product.category.categoryName}</td>
-                    <td class="col-md-2">
-                        <a href="<c:url value="/admin/products/${product.id}/edit"/>">
-                            <button class="btn btn-info" type="button">Edit
-                            </button>
-                        </a>
-                        <a href="<c:url value="/admin/products/${product.id}/remove"/>">
-                            <button class="btn btn-danger" type="button">Delete
-                            </button>
-                        </a>
-                    </td>
-                </tr>
-            </c:otherwise>
+                    <tr>
+                        <td class="col-md-1">${product.id}</td>
+                        <td class="col-md-4">${product.productName}</td>
+                        <td class="col-md-1">${product.unitPrice}</td>
+                        <td class="col-md-4">${product.category.categoryName}</td>
+                        <td class="col-md-2">
+                            <a href="<c:url value="/admin/products/edit/${product.id}"/>">
+                                <button class="btn btn-info" type="button">Edit
+                                </button>
+                            </a>
+                            <a href="<c:url value="/admin/products/remove/${product.id}"/>">
+                                <button class="btn btn-danger" type="button">Delete
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                </c:otherwise>
             </c:choose>
         </c:forEach>
         </c:if>
 
-
-        <c:if test="${addNewModule}">
+        <c:if test="${showAddNewProductModule}">
             <spring:message code="lbl.name" var="productName"/>
             <spring:message code="lbl.price" var="productPrice"/>
             <spring:message code="lbl.id" var="productId"/>
@@ -93,7 +85,7 @@
                                                      placeholder="${productPrice}"
                                                      required="required"/></td>
                     <td class="col-md-4"><form:select class="form-control" path="category"
-                                                      items="${categoryList}"
+                                                      items="${listOfCategories}"
                                                       itemValue="categoryName"
                                                       itemLabel="categoryName"/></td>
                     <td class="col-md-2">

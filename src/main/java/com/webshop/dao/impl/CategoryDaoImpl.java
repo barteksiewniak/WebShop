@@ -22,12 +22,14 @@ public class CategoryDaoImpl extends AbstractDao<Integer, Category> implements C
     }
 
     @Override
-    public List<Category> getAll() {
+    public List<Category> getAll()
+    {
         return findAll();
     }
 
     @Override
-    public Category getByName(String name) {
+    public Category getByName(String name)
+    {
         try
         {
             CriteriaQuery<Category> query = createEntityCriteria();
@@ -38,9 +40,7 @@ public class CategoryDaoImpl extends AbstractDao<Integer, Category> implements C
 
             TypedQuery<Category> tq = getEntityManager().createQuery(query);
             return tq.getSingleResult();
-        }
-
-        catch (NoResultException nre)
+        } catch (NoResultException nre)
         {
             return null;
         }

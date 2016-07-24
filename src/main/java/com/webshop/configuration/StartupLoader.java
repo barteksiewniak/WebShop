@@ -50,7 +50,7 @@ public class StartupLoader
             userService.saveUser(user, "ADMIN");
         }
 
-        if (categoryService.list().size() < 4)
+        if (categoryService.listOfCategories().size() < 4)
         {
             populateCategory().stream()
                     .forEach(s -> categoryService.saveCategory(s));

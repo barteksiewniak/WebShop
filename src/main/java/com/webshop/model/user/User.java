@@ -1,18 +1,8 @@
 package com.webshop.model.user;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "APP_USER")
@@ -118,14 +108,14 @@ public class User implements Serializable
         this.state = state;
     }
 
-    public void setUserProfiles(Collection<UserProfile> userProfiles)
-    {
-        this.userProfiles = userProfiles;
-    }
-
     public Collection<UserProfile> getUserProfiles()
     {
         return userProfiles;
+    }
+
+    public void setUserProfiles(Collection<UserProfile> userProfiles)
+    {
+        this.userProfiles = userProfiles;
     }
 
     @Override
@@ -164,8 +154,7 @@ public class User implements Serializable
             {
                 return false;
             }
-        }
-        else if (!ssoId.equals(other.ssoId))
+        } else if (!ssoId.equals(other.ssoId))
         {
             return false;
         }

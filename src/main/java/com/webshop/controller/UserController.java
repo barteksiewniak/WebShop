@@ -63,9 +63,7 @@ public class UserController
         {
             result.rejectValue("ssoId", "error.ssoId");
             error = true;
-        }
-
-        else if (userService.findBySso(user.getSsoId()) != null)
+        } else if (userService.findBySso(user.getSsoId()) != null)
         {
             result.rejectValue("ssoId", "error.exist");
             error = true;

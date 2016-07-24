@@ -66,8 +66,7 @@ public class WebShopController
         if (principal instanceof UserDetails)
         {
             userName = ((UserDetails) principal).getUsername();
-        }
-        else
+        } else
         {
             userName = principal.toString();
         }

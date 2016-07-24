@@ -13,7 +13,9 @@ public class Category
     @Column(name = "CATEGORY_NAME", unique = true)
     private String categoryName;
 
-    public Category() {}
+    public Category()
+    {
+    }
 
     public Category(String categoryName)
     {

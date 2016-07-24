@@ -1,8 +1,7 @@
 package com.webshop.service.user;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.webshop.model.user.User;
+import com.webshop.model.user.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,8 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.webshop.model.user.User;
-import com.webshop.model.user.UserProfile;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("customUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService
