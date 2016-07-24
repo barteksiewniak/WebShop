@@ -35,6 +35,7 @@ public class AdminController
     @RequestMapping(value = "products", method = RequestMethod.GET)
     public String listOfProducts(@ModelAttribute("product") Product product, Model model)
     {
+        model.addAttribute("addNewModule", true);
         model.addAttribute("categoryList", categoryService.list());
         model.addAttribute("listOfProducts", productService.listOfProducts());
         return "/admin/products";
@@ -56,21 +57,27 @@ public class AdminController
         return "redirect:/admin/products";
     }
 
-    /*@RequestMapping(value = "products/{id}/edit", method = RequestMethod.GET)
-    public String editProduct(@PathVariable int id, Model model)
+    @RequestMapping(value = "products/{id}/edit", method = RequestMethod.GET)
+    public String editProduct(@ModelAttribute("product") Product product,
+                              @PathVariable int id, Model model)
     {
-
+        model.addAttribute("currentEdit", id);
+        model.addAttribute("categoryList", categoryService.list());
+        model.addAttribute("listOfProducts", productService.listOfProducts());
+        return "/admin/products";
     }
 
-    @RequestMapping(value = "products/create", method = RequestMethod.GET)
-    public String createProduct(Model model)
+    @RequestMapping(value = "products/{id}/edit", method = RequestMethod.POST)
+    public String editProduct(@ModelAttribute("product") Product product,
+                              @PathVariable int id, SessionStatus status)
     {
-
+        Product old = productService.findById(id);
+        old.setProductName(product.getProductName());
+        old.setUnitPrice(product.getUnitPrice());
+        old.setCategory(categoryService.findByName(product.getCategory().getCategoryName()));
+        productService.updateProduct(old);
+        status.setComplete();
+        return "redirect:/admin/products";
     }
 
-    @RequestMapping(value = "products/create", method = RequestMethod.POST)
-    public String createProduct(@ModelAttribute("product") Product product,Model model)
-    {
-
-    }*/
 }
