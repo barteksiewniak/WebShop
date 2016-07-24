@@ -1,6 +1,7 @@
 package com.webshop.controller;
 
 
+import com.webshop.model.product.Category;
 import com.webshop.model.product.Product;
 import com.webshop.service.product.CategoryService;
 import com.webshop.service.product.ProductService;
@@ -42,6 +43,7 @@ public class AdminController
     @RequestMapping(value = "products", method = RequestMethod.POST)
     public String addProduct(@ModelAttribute("product") Product product, BindingResult result, SessionStatus status)
     {
+        product.setCategory(categoryService.findByName(product.getCategory().getCategoryName()));
         productService.addProduct(product);
         status.setComplete();
         return "redirect:/admin/products";

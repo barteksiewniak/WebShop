@@ -62,7 +62,7 @@
                                                  required="required"/></td>
                 <td class="col-md-4"><form:select class="form-control" path="category"
                                                   items="${categoryList}"
-                                                  itemValue="id"
+                                                  itemValue="categoryName"
                                                   itemLabel="categoryName"/></td>
                 <td class="col-md-2">
                     <a href="<c:url value="/admin/products/create"/>">
