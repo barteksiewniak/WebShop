@@ -35,10 +35,23 @@
                             <td class="col-md-1"><form:input class="form-control" path="unitPrice"
                                                              value="${product.unitPrice}"
                                                              required="required"/></td>
-                            <td class="col-md-4"><form:select class="form-control" path="category"
-                                                              items="${listOfCategories}"
-                                                              itemValue="categoryName"
-                                                              itemLabel="categoryName"/></td>
+                            <td class="col-md-4">
+                                <spring:bind path="category">
+                                    <select class="form-control" name="category">
+                                        <c:forEach items='${listOfCategories}' var='currentCategory'>
+                                            <c:choose>
+                                                <c:when test="${currentCategory.id eq product.category.id}">
+                                                    <option value="${currentCategory.categoryName}" selected="true">${currentCategory.categoryName}</option>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <option value="${currentCategory.categoryName}">${currentCategory.categoryName}</option>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>
+                                    </select>
+                                </spring:bind>
+                            </td>
+
                             <td class="col-md-2">
                                 <button form="edit" class="btn btn-success" type="submit">Update</button>
                                 <a href="/admin/products" class="btn btn-warning">Cancel</a>
