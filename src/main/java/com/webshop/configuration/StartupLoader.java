@@ -3,8 +3,10 @@ package com.webshop.configuration;
 import com.webshop.model.product.Category;
 import com.webshop.model.product.Product;
 import com.webshop.model.user.User;
+import com.webshop.model.user.UserProfile;
 import com.webshop.service.product.CategoryService;
 import com.webshop.service.product.ProductService;
+import com.webshop.service.user.UserProfileService;
 import com.webshop.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,12 +26,19 @@ public class StartupLoader
     ProductService productService;
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    UserProfileService userProfileService;
 
     @PostConstruct
     void checkDefault()
     {
+        if (userProfileService.list().isEmpty())
+        {
+            populateUserProfile().stream()
+                    .forEach(s -> userProfileService.addUserProfile(s));
+        }
 
-      User user = userService.findBySso("admin");
+        User user = userService.findBySso("admin");
         if (user == null)
         {
             user = new User();
@@ -78,6 +87,15 @@ public class StartupLoader
         list.add(new Product("SSD 256GB", new BigDecimal(478), categoryService.findByName("Electronics")));
         list.add(new Product("Skirt", new BigDecimal(50), categoryService.findByName("Clothes")));
         list.add(new Product("Nineteen Eighty-Four G. Orwell", new BigDecimal(10), categoryService.findByName("Books")));
+        return list;
+    }
+
+    private List<UserProfile> populateUserProfile()
+    {
+        List<UserProfile> list = new ArrayList<>(3);
+        list.add(new UserProfile("ADMIN"));
+        list.add(new UserProfile("DB"));
+        list.add(new UserProfile("USER"));
         return list;
     }
 

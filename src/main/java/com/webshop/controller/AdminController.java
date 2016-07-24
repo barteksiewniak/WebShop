@@ -42,24 +42,6 @@ public class AdminController
     @RequestMapping(value = "products", method = RequestMethod.POST)
     public String addProduct(@ModelAttribute("product") Product product, BindingResult result, SessionStatus status)
     {
-        boolean error = false;
-        if (product.getProductName().isEmpty())
-        {
-            result.rejectValue("productName", "error.productName");
-            error = true;
-        }
-
-        if (product.getUnitPrice() == null)
-        {
-            result.rejectValue("unitPrice", "error.productUnitPrice");
-            error = true;
-        }
-
-        if (error)
-        {
-            return "/admin/products";
-        }
-
         productService.addProduct(product);
         status.setComplete();
         return "redirect:/admin/products";
