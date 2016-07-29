@@ -10,8 +10,17 @@ public class Category
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "CATEGORY_NAME")
+    @Column(name = "CATEGORY_NAME", unique = true)
     private String categoryName;
+
+    public Category()
+    {
+    }
+
+    public Category(String categoryName)
+    {
+        this.categoryName = categoryName;
+    }
 
     public String getCategoryName()
     {
@@ -21,6 +30,16 @@ public class Category
     public void setCategoryName(String categoryName)
     {
         this.categoryName = categoryName;
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
     }
 
     @Override

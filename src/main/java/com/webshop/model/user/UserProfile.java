@@ -1,11 +1,6 @@
 package com.webshop.model.user;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "USER_PROFILE")
@@ -17,6 +12,15 @@ public class UserProfile
 
     @Column(name = "TYPE", length = 15, unique = true, nullable = false)
     private String type = UserProfileType.USER.getUserProfileType();
+
+    public UserProfile()
+    {
+    }
+
+    public UserProfile(String type)
+    {
+        this.type = type;
+    }
 
     public int getId()
     {
@@ -75,8 +79,7 @@ public class UserProfile
             {
                 return false;
             }
-        }
-        else if (!type.equals(other.type))
+        } else if (!type.equals(other.type))
         {
             return false;
         }

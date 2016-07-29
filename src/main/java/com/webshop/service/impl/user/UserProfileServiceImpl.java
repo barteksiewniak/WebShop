@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service("userProfileService")
 @Transactional
 public class UserProfileServiceImpl implements UserProfileService
@@ -17,5 +19,17 @@ public class UserProfileServiceImpl implements UserProfileService
     public UserProfile findByName(String name)
     {
         return userProfileDao.findByName(name);
+    }
+
+    @Override
+    public List<UserProfile> list()
+    {
+        return userProfileDao.getAll();
+    }
+
+    @Override
+    public void addUserProfile(UserProfile s)
+    {
+        userProfileDao.save(s);
     }
 }

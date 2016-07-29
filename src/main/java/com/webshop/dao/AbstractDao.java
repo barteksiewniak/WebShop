@@ -39,9 +39,9 @@ public abstract class AbstractDao<PK extends Serializable, T>
         getEntityManager().persist(entity);
     }
 
-    public void delete(Object id)
+    public void delete(PK id)
     {
-        getEntityManager().remove(id);
+        getEntityManager().remove(getByKey(id));
     }
 
     public void update(T entity)
@@ -50,7 +50,8 @@ public abstract class AbstractDao<PK extends Serializable, T>
     }
 
     @SuppressWarnings("unchecked")
-    public List<T> findAll() {
+    public List<T> findAll()
+    {
         return getEntityManager().createQuery("Select t from " + persistentClass.getSimpleName() + " t").getResultList();
     }
 
