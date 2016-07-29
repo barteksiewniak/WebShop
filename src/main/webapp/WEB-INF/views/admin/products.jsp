@@ -29,19 +29,33 @@
                         <tr>
                             <td class="col-md-1"><form:input class="form-control" path="id" value="${product.id}"
                                                              disabled="true"/></td>
-                            <td class="col-md-4"><form:input class="form-control" path="productName"
-                                                             value="${product.productName}"
-                                                             required="required"/></td>
-                            <td class="col-md-1"><form:input class="form-control" path="unitPrice"
-                                                             value="${product.unitPrice}"
-                                                             required="required"/></td>
+                            <td class="col-md-4">
+                                <spring:bind path="productName">
+                                    <div class="${status.error ? 'has-error' : ''}">
+                                        <form:input class="form-control" path="productName"
+                                                    value="${product.productName}"
+                                                    required="required"/>
+                                    </div>
+                                </spring:bind>
+                            </td>
+
+                            <td class="col-md-1">
+                                <spring:bind path="unitPrice">
+                                    <div class="${status.error ? 'has-error' : ''}">
+                                        <form:input cssClass="form-control" path="unitPrice"
+                                                    value="${product.unitPrice}"
+                                                    required="required"/>
+                                    </div>
+                                </spring:bind>
+                            </td>
                             <td class="col-md-4">
                                 <spring:bind path="category">
                                     <select class="form-control" name="category">
                                         <c:forEach items='${listOfCategories}' var='currentCategory'>
                                             <c:choose>
                                                 <c:when test="${currentCategory.id eq product.category.id}">
-                                                    <option value="${currentCategory.categoryName}" selected="true">${currentCategory.categoryName}</option>
+                                                    <option value="${currentCategory.categoryName}"
+                                                            selected="true">${currentCategory.categoryName}</option>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <option value="${currentCategory.categoryName}">${currentCategory.categoryName}</option>
@@ -58,7 +72,6 @@
                             </td>
                         </tr>
                     </form:form>
-
                 </c:when>
                 <c:otherwise>
 
@@ -84,19 +97,35 @@
         </c:if>
 
         <c:if test="${showAddNewProductModule}">
+
             <spring:message code="lbl.name" var="productName"/>
             <spring:message code="lbl.price" var="productPrice"/>
             <spring:message code="lbl.id" var="productId"/>
+
             <form:form id="add" role="form" method="post" modelAttribute="product">
                 <tr>
                     <td class="col-md-1"><form:input class="form-control" path="id" value="${productId}"
                                                      placeholder="${productId}" disabled="true"/></td>
-                    <td class="col-md-4"><form:input class="form-control" path="productName"
-                                                     placeholder="${productName}"
-                                                     required="required"/></td>
-                    <td class="col-md-1"><form:input class="form-control" path="unitPrice"
-                                                     placeholder="${productPrice}"
-                                                     required="required"/></td>
+                    <td class="col-md-4">
+                        <spring:bind path="productName">
+                            <div class="${status.error ? 'has-error' : ''}">
+                                <form:input class="form-control" path="productName"
+                                            placeholder="${productName}"
+                                            required="required"/>
+                            </div>
+                        </spring:bind>
+                    </td>
+
+                    <td class="col-md-1">
+                        <spring:bind path="unitPrice">
+                            <div class="${status.error ? 'has-error' : ''}">
+                                <form:input cssClass="form-control" path="unitPrice"
+                                            placeholder="${productPrice}"
+                                            required="required"/>
+                            </div>
+                        </spring:bind>
+                    </td>
+
                     <td class="col-md-4"><form:select class="form-control" path="category"
                                                       items="${listOfCategories}"
                                                       itemValue="categoryName"
@@ -109,7 +138,6 @@
         </c:if>
         </tbody>
     </table>
-
 </div>
 </body>
 </html>
