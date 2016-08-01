@@ -34,8 +34,7 @@ public class StartupLoader
     {
         if (userProfileService.list().isEmpty())
         {
-            populateUserProfile().stream()
-                    .forEach(s -> userProfileService.addUserProfile(s));
+            populateUserProfile().forEach(s -> userProfileService.addUserProfile(s));
         }
 
         User user = userService.findBySso("admin");
@@ -52,14 +51,12 @@ public class StartupLoader
 
         if (categoryService.listOfCategories().size() < 4)
         {
-            populateCategory().stream()
-                    .forEach(s -> categoryService.saveCategory(s));
+            populateCategory().forEach(s -> categoryService.saveCategory(s));
         }
 
         if (productService.listOfProducts().size() < 5)
         {
-            populateProduct().stream()
-                    .forEach(s -> productService.addProduct(s));
+            populateProduct().forEach(s -> productService.addProduct(s));
         }
 
     }
