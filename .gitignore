@@ -37,7 +37,6 @@
 /out/
 /.idea
 /target/
-/src/test/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
