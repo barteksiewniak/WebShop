@@ -3,7 +3,6 @@ package com.webshop.dao.impl;
 import com.webshop.dao.AbstractDao;
 import com.webshop.dao.CategoryDao;
 import com.webshop.model.product.Category;
-import com.webshop.model.user.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;

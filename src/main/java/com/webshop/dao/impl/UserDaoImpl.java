@@ -2,6 +2,7 @@ package com.webshop.dao.impl;
 
 import com.webshop.dao.AbstractDao;
 import com.webshop.dao.UserDao;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.webshop.model.user.User;
@@ -15,6 +16,8 @@ import java.util.List;
 @Repository("userDao")
 public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao
 {
+    private static final Logger logger = Logger.getLogger(CategoryDaoImpl.class);
+
     public User findById(int id)
     {
         return getByKey(id);
@@ -36,5 +39,6 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao
     public void saveUser(User user)
     {
         persist(user);
+        logger.info("User " + user.getId() + " saved.");
     }
 }
