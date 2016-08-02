@@ -5,6 +5,8 @@ import com.webshop.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,5 +22,11 @@ public class ProductController
         model.addAttribute("product", new Product());
         model.addAttribute("listOfProducts", productService.listOfProducts());
         return "products";
+    }
+
+    @RequestMapping(value = "product/{id}", method=RequestMethod.GET)
+    public String getProductById(Model model, @PathVariable int id){
+        model.addAttribute("product", productService.findById(id));
+        return "product";
     }
 }
