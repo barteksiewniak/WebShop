@@ -39,12 +39,16 @@ public class ProductDaoImpl extends AbstractDao<Integer, Product> implements Pro
     }
 
     @Override
-    public voi findByCategory(Category category)
+    public List<Product> findByCategory(Category category)
     {
-        CriteriaQuery<Product> query = getCriteriaBuilder().createQuery(Product.class);
-        Root<Product> product = query.from(Product.class);
-        Join<Product, Category> categories = product.join("categories");
-        query.where(getCriteriaBuilder().equal(categories.get("categoryName"), "CPU"));
+        CriteriaQuery<Product> query = createEntityCriteria();
+        Root<Product> root = query.from(Product.class);
+
+        query.select(root)
+                .where(getCriteriaBuilder().equal(root.get("category"), category));
+
+        TypedQuery<Product> tq = getEntityManager().createQuery(query);
+        return tq.getResultList();
     }
 
     @Override
