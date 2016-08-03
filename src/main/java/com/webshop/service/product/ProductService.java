@@ -1,5 +1,6 @@
 package com.webshop.service.product;
 
+import com.webshop.model.product.Category;
 import com.webshop.model.product.Product;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface ProductService
     List<Product> listOfProducts();
 
     void removeProduct(int id);
+
+    List<Product> findByCategory(Category category);
 }

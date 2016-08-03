@@ -1,6 +1,7 @@
 package com.webshop.service.impl.product;
 
 import com.webshop.dao.ProductDao;
+import com.webshop.model.product.Category;
 import com.webshop.model.product.Product;
 import com.webshop.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,11 @@ public class ProductServiceImpl implements ProductService
     public void removeProduct(int id)
     {
         productDao.removeProduct(id);
+    }
+
+    @Override
+    public List<Product> findByCategory(Category category)
+    {
+        return productDao.findByCategory(category);
     }
 }

@@ -1,5 +1,6 @@
 package com.webshop.controller;
 
+import com.webshop.model.product.Category;
 import com.webshop.model.product.Product;
 import com.webshop.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,13 @@ public class ProductController
     public String getProductById(Model model, @PathVariable int id){
         model.addAttribute("product", productService.findById(id));
         return "product";
+    }
+
+    @RequestMapping(value = "products/{category}", method=RequestMethod.GET)
+    public String getProductByCategory(Model model, @PathVariable Category category)
+    {
+        model.addAttribute("product", new Product());
+        model.addAttribute("listOfProducts", productService.findByCategory(category));
+        return "products";
     }
 }
