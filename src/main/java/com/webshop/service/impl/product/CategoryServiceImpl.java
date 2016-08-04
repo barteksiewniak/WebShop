@@ -33,4 +33,10 @@ public class CategoryServiceImpl implements CategoryService
     {
         return categoryDao.getAll();
     }
+
+    @Override
+    public Category getByName(String category)
+    {
+        return categoryDao.getByName(category);
+    }
 }

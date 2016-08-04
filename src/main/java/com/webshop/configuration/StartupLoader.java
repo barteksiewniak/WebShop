@@ -49,12 +49,12 @@ public class StartupLoader
             userService.saveUser(user, "ADMIN");
         }
 
-        if (categoryService.listOfCategories().size() < 4)
+        if (categoryService.listOfCategories().size() < 1)
         {
             populateCategory().forEach(s -> categoryService.saveCategory(s));
         }
 
-        if (productService.listOfProducts().size() < 5)
+        if (productService.listOfProducts().size() < 1)
         {
             populateProduct().forEach(s -> productService.addProduct(s));
         }
@@ -63,33 +63,31 @@ public class StartupLoader
 
     private List<Category> populateCategory()
     {
-        List<Category> list = new ArrayList<>(5);
-        list.add(new Category("Food"));
-        list.add(new Category("Electronics"));
-        list.add(new Category("Furniture"));
-        list.add(new Category("Clothes"));
-        list.add(new Category("Books"));
+        List<Category> list = new ArrayList<>();
+        list.add(new Category("GPU"));
+        list.add(new Category("Monitor"));
+        list.add(new Category("CPU"));
         return list;
     }
 
     private List<Product> populateProduct()
     {
-        List<Product> list = new ArrayList<>(5);
-        list.add(new Product("Milk", new BigDecimal(2.50), categoryService.findByName("Food")));
-        list.add(new Product("Phone", new BigDecimal(699.99), categoryService.findByName("Electronics")));
-        list.add(new Product("Tomato", new BigDecimal(1.30), categoryService.findByName("Food")));
-        list.add(new Product("Laptop", new BigDecimal(3800), categoryService.findByName("Electronics")));
-        list.add(new Product("Bed 200x220", new BigDecimal(1200), categoryService.findByName("Furniture")));
-        list.add(new Product("Table 150x200", new BigDecimal(300), categoryService.findByName("Furniture")));
-        list.add(new Product("SSD 256GB", new BigDecimal(478), categoryService.findByName("Electronics")));
-        list.add(new Product("Skirt", new BigDecimal(50), categoryService.findByName("Clothes")));
-        list.add(new Product("Nineteen Eighty-Four G. Orwell", new BigDecimal(10), categoryService.findByName("Books")));
+        List<Product> list = new ArrayList<>();
+        list.add(new Product("MSI GF GTX 970 4GB DDR5 256bit PCI-e GAMING", new BigDecimal(1359), categoryService.findByName("GPU")));
+        list.add(new Product("MSI GF GTX 1070 Gaming X 8GB GDDR5 256bit PCI-e", new BigDecimal(2299), categoryService.findByName("GPU")));
+        list.add(new Product("Gigabyte GF GTX 750Ti 2048MB 128bit PCI-E OC", new BigDecimal(549), categoryService.findByName("GPU")));
+        list.add(new Product("MONITOR AOC LED 23\" I2369VM", new BigDecimal(585), categoryService.findByName("Monitor")));
+        list.add(new Product("LG 21,5 22MP58VQ-P LED IPS HDMI DVI wide", new BigDecimal(499), categoryService.findByName("Monitor")));
+        list.add(new Product("EIZO 24 CS240-BK Black", new BigDecimal(2945), categoryService.findByName("Monitor")));
+        list.add(new Product("AMD X6 FX-6300 s.AM3+ BOX.", new BigDecimal(459), categoryService.findByName("CPU")));
+        list.add(new Product("Intel Core i5-4460 3,2 GHz 6MB cache s. 1150 Box", new BigDecimal(755), categoryService.findByName("CPU")));
+        list.add(new Product("Intel Core i7-4790 3,6 GHz 8MB cache s. 1150 Box", new BigDecimal(1399), categoryService.findByName("CPU")));
         return list;
     }
 
     private List<UserProfile> populateUserProfile()
     {
-        List<UserProfile> list = new ArrayList<>(3);
+        List<UserProfile> list = new ArrayList<>();
         list.add(new UserProfile("ADMIN"));
         list.add(new UserProfile("DB"));
         list.add(new UserProfile("USER"));
