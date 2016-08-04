@@ -8,10 +8,7 @@ import com.webshop.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ProductController
@@ -27,8 +24,8 @@ public class ProductController
         return "products";
     }
 
-    @RequestMapping(value = "product/{id}", method=RequestMethod.GET)
-    public String getProductById(Model model, @PathVariable int id){
+    @RequestMapping(value = "product", method=RequestMethod.GET)
+    public String getProductById(Model model, @RequestParam int id){
         model.addAttribute("product", productService.findById(id));
         return "product";
     }
