@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService
     }
 
     @Override
-    public List<Product> findByCategory(Category category)
+    public List<Product> findByCategory(String category)
     {
         return productDao.findByCategory(category);
     }

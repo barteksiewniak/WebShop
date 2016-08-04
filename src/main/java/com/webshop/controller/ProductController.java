@@ -1,7 +1,9 @@
 package com.webshop.controller;
 
+import com.webshop.dao.CategoryDao;
 import com.webshop.model.product.Category;
 import com.webshop.model.product.Product;
+import com.webshop.service.product.CategoryService;
 import com.webshop.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,9 +34,8 @@ public class ProductController
     }
 
     @RequestMapping(value = "products/{category}", method=RequestMethod.GET)
-    public String getProductByCategory(Model model, @PathVariable Category category)
+    public String getProductByCategory(Model model, @PathVariable String category)
     {
-        model.addAttribute("product", new Product());
         model.addAttribute("listOfProducts", productService.findByCategory(category));
         return "products";
     }

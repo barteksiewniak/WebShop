@@ -17,7 +17,7 @@ public class Product
     @Column(name = "UNIT_PRICE")
     private BigDecimal unitPrice;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Category category;
 
     public Product()

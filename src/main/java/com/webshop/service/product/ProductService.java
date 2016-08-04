@@ -17,5 +17,5 @@ public interface ProductService
 
     void removeProduct(int id);
 
-    List<Product> findByCategory(Category category);
+    List<Product> findByCategory(String category);
 }
