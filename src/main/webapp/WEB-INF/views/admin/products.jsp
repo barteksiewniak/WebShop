@@ -5,6 +5,7 @@
 <html>
 <head>
     <link href="<c:url value='/static/css/bootstrap.css'/>" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -104,12 +105,11 @@
 
             <form:form id="add" role="form" method="post" modelAttribute="product">
                 <tr>
-                    <td class="col-md-1"><form:input class="form-control" path="id" value="${productId}"
-                                                     placeholder="${productId}" disabled="true"/></td>
+                    <td class="col-md-1"><input id="id" class="form-control" placeholder="${productId}" disabled/></td>
                     <td class="col-md-4">
                         <spring:bind path="productName">
                             <div class="${status.error ? 'has-error' : ''}">
-                                <form:input class="form-control" path="productName"
+                                <form:input id="productName" class="form-control" path="productName"
                                             placeholder="${productName}"
                                             required="required"/>
                             </div>
@@ -119,19 +119,30 @@
                     <td class="col-md-1">
                         <spring:bind path="unitPrice">
                             <div class="${status.error ? 'has-error' : ''}">
-                                <form:input cssClass="form-control" path="unitPrice"
+                                <form:input id="unitPrice" cssClass="form-control" path="unitPrice"
                                             placeholder="${productPrice}"
                                             required="required"/>
                             </div>
                         </spring:bind>
                     </td>
 
-                    <td class="col-md-4"><form:select class="form-control" path="category"
-                                                      items="${listOfCategories}"
-                                                      itemValue="categoryName"
-                                                      itemLabel="categoryName"/></td>
-                    <td class="col-md-2">
-                        <button form="add" class="btn btn-success" type="submit">+</button>
+                    <td class="col-md-3">
+                        <form:select id="categorySelect" class="form-control" path="category" required="required">
+                            <form:option value="placeholder" disabled="true" selected="true" hidden="true"
+                                         title="Choose.." label="Choose category"/>
+                            <form:options items="${listOfCategories}" itemValue="categoryName"
+                                          itemLabel="categoryName"/>
+                            <form:option id="addCategory" value="" label="Add category..."/>
+                        </form:select>
+                        <input id='categoryNameInput' type='text' style="display: none" class='form-control' placeholder='Type new category name..' required/>
+                    </td>
+
+                    <td class="col-md-3">
+                        <button id="addProductButton" form="add" class="btn btn-success" type="submit">+</button>
+                        <a id="addCategoryButton" style="display: none" href="<c:url value="/admin/category/add"/>">
+                            <button class="btn btn-success" type="submit">Confirm</button>
+                        </a>
+                        <button id="cancelCategoryButton" style="display: none" class="btn btn-danger" type="submit">Cancel</button>
                     </td>
                 </tr>
             </form:form>
@@ -139,5 +150,38 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    var categorySelect = $("#categorySelect");
+    var addProductButton = $("#addProductButton");
+    var cancelCategoryButton = $("#cancelCategoryButton");
+    var addCategoryButton = $("#addCategoryButton");
+    var categoryNameInput = $("#categoryNameInput");
+
+    categorySelect.change(function () {
+        if ($(this).val() == '') {
+            $(this).hide();
+            $("input").prop("disabled", true);
+            categoryNameInput.prop("disabled", false);
+            categoryNameInput.show();
+            addCategoryButton.show();
+            cancelCategoryButton.show();
+            addProductButton.hide();
+        }
+    });
+
+    cancelCategoryButton.click(function () {
+        $("input").prop("disabled", false);
+        $("#id").prop("disabled", true);
+        addCategoryButton.hide();
+        cancelCategoryButton.hide();
+        categoryNameInput.hide();
+        categorySelect.val("placeholder");
+        categorySelect.show();
+        addProductButton.show();
+
+    });
+
+</script>
 </body>
 </html>
