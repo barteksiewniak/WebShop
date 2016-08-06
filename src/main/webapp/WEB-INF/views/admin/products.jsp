@@ -131,26 +131,18 @@
                         <spring:bind path="category">
                             <div class="${status.error ? 'has-error' : ''}">
                                 <select class="selectpicker form-control show-tick" name="category"
-                                        data-live-search="true" title="Choose category..">
+                                        data-live-search="true" title="Choose category.." form="add">
                                     <option value="divider" data-divider="true"></option>
                                     <c:forEach items="${listOfCategories}" var="category">
-                                        <option value="${category.categoryName}">${category.categoryName}</option>
+                                        <option>${category.categoryName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
                         </spring:bind>
-                        <input id='categoryNameInput' type='text' style="display: none" class='form-control'
-                               placeholder='Type new category name..'/>
                     </td>
 
                     <td class="col-md-3">
                         <button id="addProductButton" form="add" class="btn btn-success" type="submit">+</button>
-                        <a id="confirmCategoryButton" style="display: none" href="<c:url value="/admin/category/add"/>">
-                            <button class="btn btn-success" type="submit">Confirm</button>
-                        </a>
-                        <button id="cancelCategoryButton" style="display: none" class="btn btn-danger" type="submit">
-                            Cancel
-                        </button>
                     </td>
                 </tr>
             </form:form>
@@ -170,39 +162,8 @@
     var categoryNameInput = $("#categoryNameInput");
 
     categorySelect.selectpicker();
-    $(".bs-searchbox").after('<div class="bs-searchbox"> <button id="addCategoryButton" class="btn btn-success form-control">Add Category..</button></div>');
-
-    var addCategoryButton = $("#addCategoryButton");
-    addCategoryButton.click(function () {
-        categorySelect.selectpicker("hide");
-        $("input").prop("disabled", true);
-        categoryNameInput.prop("disabled", false);
-        categoryNameInput.show();
-        confirmCategoryButton.show();
-        cancelCategoryButton.show();
-        addProductButton.hide();
-    });
-
-    //test, it came out that spring has problem, because value of select changes properly
-    addProductButton.click(function () {
-        console.info(categorySelect.val() + " selectpickervalue")
-        console.info($("select").val() + " select")
-    })
-    categorySelect.on('changed.bs.select', function (e) {
-        console.info(categorySelect.val() + " selectpickervalue")
-        console.info($("select").val() + " select")
-    });
-
-    cancelCategoryButton.click(function () {
-        $("input").prop("disabled", false);
-        $("#id").prop("disabled", true);
-        confirmCategoryButton.hide();
-        cancelCategoryButton.hide();
-        categoryNameInput.hide();
-        categorySelect.selectpicker("render");
-        categorySelect.selectpicker("show");
-        addProductButton.show();
-    });
+    $(".bs-searchbox").append('<div id="searchOrAdd"  class = "input-group"><span class = "input-group-btn"><button id="addCategoryButton" class ="btn btn-success" type ="button">+</button></span></div>');
+    $(".bs-searchbox input").detach().prependTo("#searchOrAdd");
 
 </script>
 </body>
