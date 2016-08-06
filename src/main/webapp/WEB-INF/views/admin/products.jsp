@@ -5,7 +5,8 @@
 <html>
 <head>
     <link href="<c:url value='/static/css/bootstrap.css'/>" rel="stylesheet"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
 </head>
 <body>
 <div class="container">
@@ -127,22 +128,29 @@
                     </td>
 
                     <td class="col-md-3">
-                        <form:select id="categorySelect" class="form-control" path="category" required="required">
-                            <form:option value="placeholder" disabled="true" selected="true" hidden="true"
-                                         title="Choose.." label="Choose category"/>
-                            <form:options items="${listOfCategories}" itemValue="categoryName"
-                                          itemLabel="categoryName"/>
-                            <form:option id="addCategory" value="" label="Add category..."/>
-                        </form:select>
-                        <input id='categoryNameInput' type='text' style="display: none" class='form-control' placeholder='Type new category name..' required/>
+                        <spring:bind path="category">
+                            <div class="${status.error ? 'has-error' : ''}">
+                                <select class="selectpicker form-control show-tick" name="category"
+                                        data-live-search="true" title="Choose category..">
+                                    <option value="divider" data-divider="true"></option>
+                                    <c:forEach items="${listOfCategories}" var="category">
+                                        <option value="${category.categoryName}">${category.categoryName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </spring:bind>
+                        <input id='categoryNameInput' type='text' style="display: none" class='form-control'
+                               placeholder='Type new category name..'/>
                     </td>
 
                     <td class="col-md-3">
                         <button id="addProductButton" form="add" class="btn btn-success" type="submit">+</button>
-                        <a id="addCategoryButton" style="display: none" href="<c:url value="/admin/category/add"/>">
+                        <a id="confirmCategoryButton" style="display: none" href="<c:url value="/admin/category/add"/>">
                             <button class="btn btn-success" type="submit">Confirm</button>
                         </a>
-                        <button id="cancelCategoryButton" style="display: none" class="btn btn-danger" type="submit">Cancel</button>
+                        <button id="cancelCategoryButton" style="display: none" class="btn btn-danger" type="submit">
+                            Cancel
+                        </button>
                     </td>
                 </tr>
             </form:form>
@@ -151,35 +159,49 @@
     </table>
 </div>
 
+<script src="<c:url value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>"></script>
+<script src="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"/>"></script>
+<script src="<c:url value="/static/js/bootstrap.min.js"/>"></script>
 <script>
-    var categorySelect = $("#categorySelect");
+    var categorySelect = $(".selectpicker");
     var addProductButton = $("#addProductButton");
+    var confirmCategoryButton = $("#confirmCategoryButton");
     var cancelCategoryButton = $("#cancelCategoryButton");
-    var addCategoryButton = $("#addCategoryButton");
     var categoryNameInput = $("#categoryNameInput");
 
-    categorySelect.change(function () {
-        if ($(this).val() == '') {
-            $(this).hide();
-            $("input").prop("disabled", true);
-            categoryNameInput.prop("disabled", false);
-            categoryNameInput.show();
-            addCategoryButton.show();
-            cancelCategoryButton.show();
-            addProductButton.hide();
-        }
+    categorySelect.selectpicker();
+    $(".bs-searchbox").after('<div class="bs-searchbox"> <button id="addCategoryButton" class="btn btn-success form-control">Add Category..</button></div>');
+
+    var addCategoryButton = $("#addCategoryButton");
+    addCategoryButton.click(function () {
+        categorySelect.selectpicker("hide");
+        $("input").prop("disabled", true);
+        categoryNameInput.prop("disabled", false);
+        categoryNameInput.show();
+        confirmCategoryButton.show();
+        cancelCategoryButton.show();
+        addProductButton.hide();
+    });
+
+    //test, it came out that spring has problem, because value of select changes properly
+    addProductButton.click(function () {
+        console.info(categorySelect.val() + " selectpickervalue")
+        console.info($("select").val() + " select")
+    })
+    categorySelect.on('changed.bs.select', function (e) {
+        console.info(categorySelect.val() + " selectpickervalue")
+        console.info($("select").val() + " select")
     });
 
     cancelCategoryButton.click(function () {
         $("input").prop("disabled", false);
         $("#id").prop("disabled", true);
-        addCategoryButton.hide();
+        confirmCategoryButton.hide();
         cancelCategoryButton.hide();
         categoryNameInput.hide();
-        categorySelect.val("placeholder");
-        categorySelect.show();
+        categorySelect.selectpicker("render");
+        categorySelect.selectpicker("show");
         addProductButton.show();
-
     });
 
 </script>
