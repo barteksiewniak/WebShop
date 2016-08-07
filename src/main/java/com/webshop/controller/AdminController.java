@@ -1,5 +1,6 @@
 package com.webshop.controller;
 
+import com.webshop.model.product.Category;
 import com.webshop.model.product.Product;
 import com.webshop.service.product.CategoryService;
 import com.webshop.service.product.ProductService;
@@ -98,6 +99,13 @@ public class AdminController
         productService.updateProduct(productToEdit);
         status.setComplete();
         return "redirect:/admin/products";
+    }
+
+    //Hadn't idea how to make POST work, so I used GET. Should I use POST instead?
+    @RequestMapping(value = "category/add", method = RequestMethod.GET)
+    public void addCategory(@ModelAttribute("category") Category category)
+    {
+        categoryService.saveCategory(category);
     }
 
 }

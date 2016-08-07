@@ -5,8 +5,7 @@
 <html>
 <head>
     <link href="<c:url value='/static/css/bootstrap.css'/>" rel="stylesheet"/>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="<c:url value='/static/css/bootstrap-select.min.css'/>">
 </head>
 <body>
 <div class="container">
@@ -151,20 +150,31 @@
     </table>
 </div>
 
-<script src="<c:url value="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>"></script>
-<script src="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"/>"></script>
+<script src="<c:url value="/static/js/jquery-3.1.0.min.js"/>"></script>
+<script src="<c:url value="/static/js/bootstrap-select.min.js"/>"></script>
 <script src="<c:url value="/static/js/bootstrap.min.js"/>"></script>
 <script>
     var categorySelect = $(".selectpicker");
     var addProductButton = $("#addProductButton");
-    var confirmCategoryButton = $("#confirmCategoryButton");
-    var cancelCategoryButton = $("#cancelCategoryButton");
-    var categoryNameInput = $("#categoryNameInput");
 
     categorySelect.selectpicker();
     $(".bs-searchbox").append('<div id="searchOrAdd"  class = "input-group"><span class = "input-group-btn"><button id="addCategoryButton" class ="btn btn-success" type ="button">+</button></span></div>');
-    $(".bs-searchbox input").detach().prependTo("#searchOrAdd");
+    var newCategoryInput = $(".bs-searchbox input").detach().prependTo("#searchOrAdd");
 
+    $("#addCategoryButton").click(function () {
+        var input = newCategoryInput.val();
+        $.ajax({
+            url: "/admin/category/add",
+            type: 'GET',
+            data: {"categoryName": input},
+            dataType: "json",
+            contentType: 'application/json',
+            mimeType: 'application/json',
+        });
+        categorySelect.append("<option>" + input + "</option>")
+                .selectpicker("refresh")
+                .selectpicker("val", input);
+    });
 </script>
 </body>
 </html>
