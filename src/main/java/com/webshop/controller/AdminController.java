@@ -11,10 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 
@@ -102,10 +99,23 @@ public class AdminController
     }
 
     //Hadn't idea how to make POST work, so I used GET. Should I use POST instead?
-    @RequestMapping(value = "category/add", method = RequestMethod.GET)
-    public void addCategory(@ModelAttribute("category") Category category)
+    @RequestMapping(value = "categories/add", method = RequestMethod.GET)
+    public @ResponseBody String addCategory(@ModelAttribute("category") Category category)
     {
-        categoryService.saveCategory(category);
+        if (!category.getCategoryName().isEmpty())
+            categoryService.saveCategory(category);
+        return "odpowiedz";
+    }
+
+    @RequestMapping(value = "categories/remove/{categoryName}", method = RequestMethod.GET)
+    public @ResponseBody String removeCategory(@PathVariable String categoryName)
+    {
+        Category category = categoryService.findByName(categoryName);
+        if(category != null)
+        {
+            categoryService.removeCategory(category);
+        }
+        return "odpowiedz usun";
     }
 
 }

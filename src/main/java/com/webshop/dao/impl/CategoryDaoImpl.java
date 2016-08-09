@@ -21,6 +21,12 @@ public class CategoryDaoImpl extends AbstractDao<Integer, Category> implements C
     }
 
     @Override
+    public void remove(Category category)
+    {
+        delete(category);
+    }
+
+    @Override
     public List<Category> getAll()
     {
         return findAll();

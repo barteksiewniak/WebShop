@@ -44,6 +44,11 @@ public abstract class AbstractDao<PK extends Serializable, T>
         getEntityManager().remove(getByKey(id));
     }
 
+    public void delete(T entity)
+    {
+        getEntityManager().remove(getEntityManager().merge(entity));
+    }
+
     public void update(T entity)
     {
         getEntityManager().merge(entity);

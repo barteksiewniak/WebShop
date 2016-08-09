@@ -6,6 +6,28 @@
 <head>
     <link href="<c:url value='/static/css/bootstrap.css'/>" rel="stylesheet"/>
     <link rel="stylesheet" href="<c:url value='/static/css/bootstrap-select.min.css'/>">
+    <style>
+        .remove-mark {
+            float: right;
+            margin: 2px;
+            position: relative;
+            color: red
+        }
+
+        .bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a span.check-mark {
+            position: inherit;
+            float: left;
+            display: inline-block;
+            right: 0px;
+            margin-right: 6px;
+            margin-top: 2px;
+            color: greenyellow;
+        }
+
+        .dropdown-menu > li > a {
+            padding: 6px 10px;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -28,7 +50,7 @@
 
                     <form:form id="edit" role="form" method="post" modelAttribute="product">
                         <tr>
-                            <td class="col-md-1"><form:input class="form-control" path="id" value="${product.id}"
+                            <td class="col-md-1"><form:input class="form-control" path="id" style="width: 45px" value="${product.id}"
                                                              disabled="true"/></td>
                             <td class="col-md-4">
                                 <spring:bind path="productName">
@@ -51,7 +73,8 @@
                             </td>
                             <td class="col-md-4">
                                 <spring:bind path="category">
-                                    <select class="form-control" name="category">
+                                    <select class="selectpicker form-control show-tick" name="category"
+                                            data-live-search="true" title="Choose category.." form="edit">
                                         <c:forEach items='${listOfCategories}' var='currentCategory'>
                                             <c:choose>
                                                 <c:when test="${currentCategory.id eq product.category.id}">
@@ -81,7 +104,7 @@
                         <td class="col-md-4">${product.productName}</td>
                         <td class="col-md-1">${product.unitPrice}</td>
                         <td class="col-md-4">${product.category.categoryName}</td>
-                        <td class="col-md-2">
+                        <td class="col-md-2 input-group">
                             <a href="<c:url value="/admin/products/edit/${product.id}"/>">
                                 <button class="btn btn-info" type="button">Edit
                                 </button>
@@ -105,7 +128,8 @@
 
             <form:form id="add" role="form" method="post" modelAttribute="product">
                 <tr>
-                    <td class="col-md-1"><input id="id" class="form-control" placeholder="${productId}" disabled/></td>
+                    <td class="col-md-1"><input id="id" class="form-control" style="width: 45px"
+                                                placeholder="${productId}" disabled/></td>
                     <td class="col-md-4">
                         <spring:bind path="productName">
                             <div class="${status.error ? 'has-error' : ''}">
@@ -131,7 +155,6 @@
                             <div class="${status.error ? 'has-error' : ''}">
                                 <select class="selectpicker form-control show-tick" name="category"
                                         data-live-search="true" title="Choose category.." form="add">
-                                    <option value="divider" data-divider="true"></option>
                                     <c:forEach items="${listOfCategories}" var="category">
                                         <option>${category.categoryName}</option>
                                     </c:forEach>
@@ -154,27 +177,60 @@
 <script src="<c:url value="/static/js/bootstrap-select.min.js"/>"></script>
 <script src="<c:url value="/static/js/bootstrap.min.js"/>"></script>
 <script>
-    var categorySelect = $(".selectpicker");
-    var addProductButton = $("#addProductButton");
+    $(function () {
+        $(".selectpicker").selectpicker();
 
-    categorySelect.selectpicker();
-    $(".bs-searchbox").append('<div id="searchOrAdd"  class = "input-group"><span class = "input-group-btn"><button id="addCategoryButton" class ="btn btn-success" type ="button">+</button></span></div>');
-    var newCategoryInput = $(".bs-searchbox input").detach().prependTo("#searchOrAdd");
+        addCategoryButton_ADD();
+        addCategoryButton_REMOVE();
 
-    $("#addCategoryButton").click(function () {
-        var input = newCategoryInput.val();
-        $.ajax({
-            url: "/admin/category/add",
-            type: 'GET',
-            data: {"categoryName": input},
-            dataType: "json",
-            contentType: 'application/json',
-            mimeType: 'application/json',
+        /*Adds a new category, when the add button clicked*/
+        $("#categoryButton_ADD").click(function () {
+            var input = $(".bs-searchbox input").val();
+            if (input) {
+                $.ajax({
+                    url: "/admin/categories/add",
+                    type: 'GET',
+                    data: {"categoryName": input},
+                    dataType: "text",
+                    success: function (response) {
+                        console.log(response);
+                    }
+                });
+                $(".selectpicker").append("<option>" + input + "</option>")
+                        .selectpicker("val", input)
+                        .selectpicker("refresh");
+                addCategoryButton_REMOVE();
+            }
         });
-        categorySelect.append("<option>" + input + "</option>")
-                .selectpicker("refresh")
-                .selectpicker("val", input);
+
+        /*Removes category when the remove button clicked*/
+        $(".bootstrap-select").on("click", ".remove-mark", function (event) {
+            var nameOfCategoryToRemove = $(this).siblings(".text").html();
+            $.get("/admin/categories/remove/" + nameOfCategoryToRemove);
+            $("option:contains('" + nameOfCategoryToRemove + "')").remove();
+            $(".selectpicker").selectpicker("refresh");
+            addCategoryButton_REMOVE();
+            event.stopPropagation();
+        });
+
+        /*Adds a new category, when 'enter' is pressed while typing category name*/
+        $(".bs-searchbox input").keyup(function (event) {
+            if (event.keyCode == 13) {
+                $("#categoryButton_ADD").click();
+            }
+        });
     });
+
+    /*Adds 'Add category' button, next to search input*/
+    function addCategoryButton_ADD() {
+        $(".bs-searchbox").append('<div id="searchOrAdd"  class = "input-group"><span class = "input-group-btn"><button id="categoryButton_ADD" class ="btn btn-success" type ="button">+</button></span></div>');
+        $(".bs-searchbox input").detach().prependTo("#searchOrAdd");
+    }
+    /*Adds 'Remove category' buttons, next to categories' names. */
+    function addCategoryButton_REMOVE() {
+        $(".dropdown-menu li a").append("<span id='removeCategoryButton' class='glyphicon glyphicon-remove remove-mark'></span>");
+    }
+
 </script>
 </body>
 </html>
