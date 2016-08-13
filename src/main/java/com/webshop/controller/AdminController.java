@@ -14,6 +14,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -98,24 +100,25 @@ public class AdminController
         return "redirect:/admin/products";
     }
 
-    //Hadn't idea how to make POST work, so I used GET. Should I use POST instead?
-    @RequestMapping(value = "categories/add", method = RequestMethod.GET)
-    public @ResponseBody String addCategory(@ModelAttribute("category") Category category)
+    @RequestMapping(value = "categories/add", method = RequestMethod.POST)
+    @ResponseBody
+    public void addCategory(@ModelAttribute("category") Category category)
     {
         if (!category.getCategoryName().isEmpty())
             categoryService.saveCategory(category);
-        return "odpowiedz";
     }
 
-    @RequestMapping(value = "categories/remove/{categoryName}", method = RequestMethod.GET)
-    public @ResponseBody String removeCategory(@PathVariable String categoryName)
+    @RequestMapping(value = "categories/remove/{categoryName}", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Product> removeCategory(@PathVariable String categoryName, @RequestParam String remove)
     {
-        Category category = categoryService.findByName(categoryName);
-        if(category != null)
+        List<Product> relatedProducts = productService.findByCategory(categoryName);
+        if (Integer.parseInt(remove) == 1)
         {
-            categoryService.removeCategory(category);
+            productService.removeProducts(relatedProducts);
+            categoryService.removeCategory(categoryService.findByName(categoryName));
         }
-        return "odpowiedz usun";
+        return relatedProducts;
     }
 
 }

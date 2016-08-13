@@ -4,6 +4,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <link href="<c:url value='/static/css/bootstrap.css'/>" rel="stylesheet"/>
     <link rel="stylesheet" href="<c:url value='/static/css/bootstrap-select.min.css'/>">
     <style>
@@ -30,6 +32,25 @@
     </style>
 </head>
 <body>
+<div class="modal fade" id="categoryModal" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer" style="border-top: none">
+                <button id='removeCategoryPermanentlyButton' type='button' class='btn btn-danger' data-dismiss="modal">REMOVE</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 <div class="container">
 
     <table class="table table-hover">
@@ -50,7 +71,8 @@
 
                     <form:form id="edit" role="form" method="post" modelAttribute="product">
                         <tr>
-                            <td class="col-md-1"><form:input class="form-control" path="id" style="width: 45px" value="${product.id}"
+                            <td class="col-md-1"><form:input class="form-control" path="id" style="width: 45px"
+                                                             value="${product.id}"
                                                              disabled="true"/></td>
                             <td class="col-md-4">
                                 <spring:bind path="productName">
@@ -180,37 +202,32 @@
     $(function () {
         $(".selectpicker").selectpicker();
 
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $(document).ajaxSend(function (e, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
+
         addCategoryButton_ADD();
         addCategoryButton_REMOVE();
 
         /*Adds a new category, when the add button clicked*/
         $("#categoryButton_ADD").click(function () {
-            var input = $(".bs-searchbox input").val();
-            if (input) {
-                $.ajax({
-                    url: "/admin/categories/add",
-                    type: 'GET',
-                    data: {"categoryName": input},
-                    dataType: "text",
-                    success: function (response) {
-                        console.log(response);
-                    }
-                });
-                $(".selectpicker").append("<option>" + input + "</option>")
-                        .selectpicker("val", input)
+            var categoryName_input = $(".bs-searchbox input").val();
+            if (categoryName_input) {
+                addCategoryRequest(categoryName_input);
+                $(".selectpicker").append("<option>" + categoryName_input + "</option>")
+                        .selectpicker("val", categoryName_input)
                         .selectpicker("refresh");
                 addCategoryButton_REMOVE();
             }
         });
 
-        /*Removes category when the remove button clicked*/
+        /*Checks if category is related with some products*/
         $(".bootstrap-select").on("click", ".remove-mark", function (event) {
             var nameOfCategoryToRemove = $(this).siblings(".text").html();
-            $.get("/admin/categories/remove/" + nameOfCategoryToRemove);
-            $("option:contains('" + nameOfCategoryToRemove + "')").remove();
-            $(".selectpicker").selectpicker("refresh");
-            addCategoryButton_REMOVE();
-            event.stopPropagation();
+            removeCategoryRequest(nameOfCategoryToRemove, false, showCategoryModal);
+            $(".selectpicker").selectpicker("val", "");
         });
 
         /*Adds a new category, when 'enter' is pressed while typing category name*/
@@ -219,18 +236,69 @@
                 $("#categoryButton_ADD").click();
             }
         });
+
+        /*Removes category permanently*/
+        $("#removeCategoryPermanentlyButton").click(function () {
+            var categoryName = $(this).attr("value");
+            removeCategoryRequest(categoryName, true);
+        });
     });
+
+    function addCategoryRequest(categoryName) {
+        $.ajax({
+            url: "/admin/categories/add",
+            type: 'POST',
+            data: {"categoryName": categoryName},
+        });
+    }
+
+    function removeCategoryRequest(categoryName, removeWithRelatedProducts, callback) {
+        $.ajax({
+            type: "POST",
+            url: "/admin/categories/remove/" + categoryName,
+            data: {'remove': (removeWithRelatedProducts ? 1 : 0)},
+            dataType: 'json',
+            success: function (data) {
+                if ($.isFunction(callback)) callback(categoryName, data);
+                if (removeWithRelatedProducts) location.reload(true);
+            },
+            error: function (e) {
+                console.log("ERROR: ", e);
+            }
+        });
+    }
+
+    /*Makes modal with submitted products*/
+    function showCategoryModal(categoryName, products) {
+        $("#removeCategoryPermanentlyButton").attr("value", categoryName);
+        if (products.length > 0) {
+            $("#categoryModal .modal-header h4").html("Chosen category (" + categoryName + ") is related with some products:");
+            //append product table schema
+            $("#categoryModal .modal-body").html("<table class='table table-hover'><thead><tr> <th class='col-md-1'>Id</th> <th class='col-md-9'>Product</th> <th class='col-md-2'>Price</th></tr> </thead><tbody></tbody>");
+            //fill table with products
+            for (i = 0; i < products.length; i++) {
+                $("#categoryModal .modal-body tbody").append("<tr> <td class='col-md-1'>" + products[i].id + "</td> <td class='col-md-9'>" + products[i].productName + "</td> <td class='col-md-2'>" + products[i].unitPrice + "</td>");
+            }
+            $("#removeCategoryPermanentlyButton").html("Remove category[" + categoryName + "] and related products[" + products.length + "]");
+
+        } else {
+            $("#categoryModal .modal-body").hide();
+            $("#categoryModal .modal-header h4").html("Do you really want to remove category - " + categoryName + "?");
+            $("#removeCategoryPermanentlyButton").html("Remove");
+        }
+        $("#categoryModal").modal();
+    }
 
     /*Adds 'Add category' button, next to search input*/
     function addCategoryButton_ADD() {
-        $(".bs-searchbox").append('<div id="searchOrAdd"  class = "input-group"><span class = "input-group-btn"><button id="categoryButton_ADD" class ="btn btn-success" type ="button">+</button></span></div>');
-        $(".bs-searchbox input").detach().prependTo("#searchOrAdd");
+        $(".bs-searchbox").addClass("input-group").append('<span class = "input-group-btn"><button id="categoryButton_ADD" class ="btn btn-success" type ="button">+</button></span>');
+        $(".bs-searchbox input").detach().prependTo(".bs-searchbox");
     }
+
     /*Adds 'Remove category' buttons, next to categories' names. */
     function addCategoryButton_REMOVE() {
         $(".dropdown-menu li a").append("<span id='removeCategoryButton' class='glyphicon glyphicon-remove remove-mark'></span>");
     }
-
 </script>
 </body>
 </html>
