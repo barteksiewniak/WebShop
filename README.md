@@ -8,7 +8,7 @@ It's bringed up to life, because we want to get involved in webdev ( mainly back
 
 ## Installation
 
-Project installation is very simple, all you have to do is to put in servlet container ( Tomcat for example ), no matter how you do it, by IDE or manually.
+Project installation is very simple, all you have to do is to put in servlet container ( Tomcat for example ), no matter how you do it, by IDE or manually.<br>
 Next step is to configure database on your side, same as in like application.properties config file.
 
 ## Contributors
@@ -17,8 +17,8 @@ If you wanna participate in it, contact with us, still is huge amount of work to
 
 ## License
 
-he MIT License (MIT)
-Copyright (c) <2016> <Bartosz Siewniak "barteksiewniak", Konrad "kkdrz">
+The MIT License (MIT)
+Copyright (c) 2016 Bartosz Siewniak "barteksiewniak", Konrad "kkdrz"
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
