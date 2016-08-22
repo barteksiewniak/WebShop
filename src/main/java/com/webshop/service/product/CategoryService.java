@@ -7,7 +7,9 @@ import java.util.List;
 public interface CategoryService
 {
     void saveCategory(Category category);
+    void removeCategory(Category category);
     Category findByName(String name);
     List<Category> listOfCategories();
     Category getByName(String category);
+
 }

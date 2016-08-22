@@ -1,5 +1,6 @@
 package com.webshop.controller;
 
+import com.webshop.model.product.Category;
 import com.webshop.model.product.Product;
 import com.webshop.service.product.CategoryService;
 import com.webshop.service.product.ProductService;
@@ -10,11 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+
+import java.util.List;
 
 
 @Controller
@@ -98,6 +98,27 @@ public class AdminController
         productService.updateProduct(productToEdit);
         status.setComplete();
         return "redirect:/admin/products";
+    }
+
+    @RequestMapping(value = "categories/add", method = RequestMethod.POST)
+    @ResponseBody
+    public void addCategory(@ModelAttribute("category") Category category)
+    {
+        if (!category.getCategoryName().isEmpty())
+            categoryService.saveCategory(category);
+    }
+
+    @RequestMapping(value = "categories/remove/{categoryName}", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Product> removeCategory(@PathVariable String categoryName, @RequestParam String remove)
+    {
+        List<Product> relatedProducts = productService.findByCategory(categoryName);
+        if (Integer.parseInt(remove) == 1)
+        {
+            productService.removeProducts(relatedProducts);
+            categoryService.removeCategory(categoryService.findByName(categoryName));
+        }
+        return relatedProducts;
     }
 
 }

@@ -48,6 +48,13 @@ public class ProductServiceImpl implements ProductService
     }
 
     @Override
+    public void removeProducts(List<Product> listOfProducts)
+    {
+        for (Product product : listOfProducts)
+            productDao.removeProduct(product.getId());
+    }
+
+    @Override
     public List<Product> findByCategory(String category)
     {
         return productDao.findByCategory(category);

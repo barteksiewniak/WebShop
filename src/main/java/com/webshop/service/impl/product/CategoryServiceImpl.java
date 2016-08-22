@@ -29,6 +29,12 @@ public class CategoryServiceImpl implements CategoryService
     }
 
     @Override
+    public void removeCategory(Category category)
+    {
+        categoryDao.remove(category);
+    }
+
+    @Override
     public List<Category> listOfCategories()
     {
         return categoryDao.getAll();

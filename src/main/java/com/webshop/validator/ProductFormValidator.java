@@ -28,6 +28,8 @@ public class ProductFormValidator implements Validator
     {
         ValidationUtils.rejectIfEmpty(errors, "productName", "error.productProductNameEmpty");
         ValidationUtils.rejectIfEmpty(errors, "unitPrice", "error.productUnitPriceEmpty");
+        ValidationUtils.rejectIfEmpty(errors, "category", "error.productCategoryEmpty");
+
         Product product = (Product) target;
 
         if (product.getUnitPrice() != null)
