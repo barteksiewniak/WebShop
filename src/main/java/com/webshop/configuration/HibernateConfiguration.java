@@ -34,7 +34,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({"com.webshop.configuration"})
-@PropertySource(value = {"classpath:application.properties"})
+@PropertySource(value = {"classpath:application.properties", "classpath:database.properties"})
 public class HibernateConfiguration
 {
     @Autowired
