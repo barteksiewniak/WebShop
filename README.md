@@ -11,7 +11,14 @@ It's bringed up to life, because we want to get involved in webdev ( mainly back
 ## Installation
 
 Project installation is very simple, all you have to do is to put in servlet container ( Tomcat for example ), no matter how you do it, by IDE or manually.<br>
-Next step is to configure database on your side, same as in like application.properties config file.
+Next step is to configure database on your side, same as in file database.properties.
+
+jdbc.driverClassName=org.postgresql.Driver
+jdbc.url=jdbc:postgresql://localhost:5432/your_schema
+jdbc.username=login
+jdbc.password=password
+
+Build working on Postgres, so if you want to swap database to another - you also have to remember about change the sql connector in pom.xml and dialect in application.properties.
 
 ## Contributors
 
