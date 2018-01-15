@@ -1,3 +1,5 @@
+![alt text](https://travis-ci.org/barteksiewniak/WebShop.svg?branch=master)
+
 ## WebShop
 
 This is a simple online webshop project who will have in the nearest future all necessary functions of shop.
